@@ -34,6 +34,34 @@ def fcc_wulff_data():
 
 
 @constant
+def fcc_wulff2_data():
+    return np.transpose(np.array([(2, 1, 1),
+                                  (2, 1, -1),
+                                  (2, -1, -1),
+                                  (2, -1, 1),
+                                  (-2, 1, 1),
+                                  (-2, 1, -1),
+                                  (-2, -1, -1),
+                                  (-2, -1, 1),
+                                  (1, 2, 1),
+                                  (1, 2, -1),
+                                  (-1, 2, -1),
+                                  (-1, 2, 1),
+                                  (1, -2, 1),
+                                  (1, -2, -1),
+                                  (-1, -2, -1),
+                                  (-1, -2, 1),
+                                  (1, 1, 2),
+                                  (1, -1, 2),
+                                  (-1, -1, 2),
+                                  (-1, 1, 2),
+                                  (1, 1, -2),
+                                  (1, -1, -2),
+                                  (-1, -1, -2),
+                                  (-1, 1, -2)]))
+
+
+@constant
 def fcc_transform():
     is2 = 1 / math.sqrt(2)
 
@@ -52,8 +80,14 @@ def fcc_wulff_obj():
          [0, 0, 1]])
 
     return (ObjectCollection.from_points(*fcc_wulff_data())
-             * flipper
-             # + pos(-1, -2, 0))
+            * flipper
+            # + pos(-1, -2, 0))
+            * ((1 / math.sqrt(2)) * np.identity(3)))
+
+
+@constant
+def fcc_wulff2_obj():
+    return (ObjectCollection.from_points(*fcc_wulff2_data())
             * ((1 / math.sqrt(2)) * np.identity(3)))
 
 

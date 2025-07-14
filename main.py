@@ -20,15 +20,26 @@ def fcc():
 
 def fcc_wulff():
     """
-    Generates the polygon that is the wulff crystal
+    Generates the polygon that is the wulff crystal (with side length 1)
     """
     wulff = fcc_wulff_obj()
-    wulff += (-1 * pos(1,2,1)) # center the crystal (somewhat)
+    wulff += (-1 * pos(1, 2, 1))  # center the crystal (somewhat)
     wulff.foreach(Point, setter('color', 'red'))
     wulff = convex_hull(wulff)
     wulff.foreach(Triangle, setter('color', 'darkred'))
     wulff.foreach(Triangle, setter('alpha', 0.7))
     return wulff
+
+
+def fcc_wulff2():
+    """
+    Generates the polygon that is the wulff crystal (with side length 2)
+    """
+    wulff = fcc_wulff2_obj()
+    wulff.foreach(Point, setter('color', 'red'))
+    wulff = convex_hull(wulff)
+    wulff.foreach(Triangle, setter('color', 'darkred'))
+    wulff.foreach(Triangle, setter('alpha', 0.7))
 
 
 def hcp():
@@ -52,9 +63,13 @@ def print_point_set(s):
     """
     print(*map(lambda p: p.pos, s))
 
+##############################################################################
+# Plot stuff here like this
+# fcc().plot()
 
-fcc().plot()
-fcc_wulff().plot()
+
+
+##############################################################################
 
 # plt.axis('off') # This line turns the axis off
 objects.ax.set_aspect('equal')
