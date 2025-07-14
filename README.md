@@ -32,8 +32,12 @@ fcc_wulff(opacity=0.5).plot()
 ![Wulff crystals with side-lengths 1 and 2 in FCC](examples/FCC_Wulff1_Wulff2.png)
 This was plotted with
 ```python
-fcc_wulff(opacity=1, color='blue', corner_color='darkblue').plot()
-fcc_wulff2(opacity=0.5).plot()
+a = auto_lines(fcc_wulff(color='blue', corner_color='darkblue'), 1)
+b = auto_lines(fcc_wulff2(), 2)
+c = a @ b
+c.foreach(Triangle, setter('opacity', 0.2))
+
+c.plot()
 ```
 
 ## The code

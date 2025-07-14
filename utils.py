@@ -70,6 +70,10 @@ def points_inward(triangle, center):
     return np.dot(orth, center - triangle[0]) > 0
 
 
+def types_of_iterable(itr):
+    return list(map(type, itr))
+
+
 def convex_hull(points: ObjectCollection):
     """
     Given an ObjectCollection returns the polygon that is the convex hull
@@ -99,7 +103,7 @@ def convex_hull(points: ObjectCollection):
 
 
 def vector_length(vector):
-    return np.dot(vector, vector)
+    return math.sqrt(np.dot(vector, vector))
 
 
 def circum_sphere(points: ObjectCollection, detail: int = 100):

@@ -7,6 +7,11 @@ import numpy.linalg as la
 ax = None
 
 
+def square_repeat(array, axis):
+    shp = (np.size(array), 1) if axis == 0 else (1, np.size(array))
+    return np.repeat(np.reshape(array, shp), np.size(array), axis=1 - axis)
+
+
 class Object(ABC):
     def __init__(self):
         self.color = "black"
@@ -35,6 +40,8 @@ class Point(Object):
 
     def __init__(self, pos):
         super().__init__()
+        if not isinstance(pos, np.ndarray):
+            raise ValueError(f"The position of points must be a nd array and not {type(pos)}")
         self.style = 'o'
         self.pos = pos
 
@@ -148,15 +155,18 @@ class Sphere(Object):
         return self.__class__(np.add(self.center, vector), self.radius, self.detail)
 
     def plot(self):
-        u = np.linspace(0, 2 * np.pi, self.detail)
-        v = np.linspace(-1, 1, self.detail)
-        offset = np.repeat(self.center[0], self.detail, self.detail)
-        print(np.shape(np.outer(np.cos(u), np.sin(v))), np.shape(offset))
-        x = self.radius * np.outer(np.cos(u), np.sin(v)) + offset
-        y = self.radius * np.outer(np.sin(u), np.sin(v)) + offset
-        z = self.radius * np.outer(np.ones(self.detail), np.cos(v)) + offset
-        ax.plot_surface(x, y, z, alpha=self.opacity)
-        # Point(self.center).plot()
+        u = square_repeat(np.linspace(0, 2 * np.pi, self.detail), 0)
+        v = square_repeat(np.linspace(-np.pi / 2, np.pi / 2, self.detail), 1)
+        h = np.sin(v)
+        r = self.radius * np.sqrt(square_repeat(np.repeat(1, self.detail), 0) - np.square(h))
+        offset = np.repeat(np.reshape(self.center, (3, 1)), self.detail, axis=1)
+
+        ax.plot_surface(
+            r * np.cos(u) + offset[0],
+            r * np.sin(u) + offset[1],
+            self.radius * h + offset[2],
+            alpha=self.opacity
+        )
 
     def predicate(self, p) -> bool:
         return p(self.center)
@@ -202,7 +212,7 @@ class ObjectCollection(Object):
     def from_points(x, y, z):
         objs = []
         for pos in zip(x, y, z):
-            objs.append(Point(pos))
+            objs.append(Point(np.array(pos)))
         return ObjectCollection(objs)
 
     def filter(self, p):

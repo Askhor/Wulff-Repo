@@ -7,6 +7,9 @@ from data import *
 # Some very technical configuration
 matplotlib.rcParams["savefig.directory"] = "./examples"
 objects.ax = plt.figure().add_subplot(projection='3d')
+objects.ax.set_xlabel('X')
+objects.ax.set_ylabel('Y')
+objects.ax.set_zlabel('Z')
 
 
 ################################################################################
@@ -34,7 +37,7 @@ def fcc_wulff(opacity=1, corner_color='red', color='darkred'):
     wulff.foreach(Point, setter('color', corner_color))
     wulff = convex_hull(wulff)
     wulff.foreach(Triangle, setter('color', color))
-    wulff.foreach(Triangle, setter('alpha', opacity))
+    wulff.foreach(Triangle, setter('opacity', opacity))
     return wulff
 
 
