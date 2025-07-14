@@ -69,7 +69,7 @@ def print_point_set(s):
     """
     Given a set s consisting of Point instances, prints their positions
     """
-    print(*map(lambda p: p.pos, s))
+    print(f"{len(s)} elements: ", *map(lambda p: p.pos, s))
 
 
 ################################################################################
