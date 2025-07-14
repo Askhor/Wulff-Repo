@@ -44,7 +44,7 @@ The raw and slightly processed coordinates of Wulff-Crystals
 
 ### objects.py
 
-The [Object](objects.py) class represents generic graphical 3d objects. Then there are the subclasses:
+The [Object](objects.py#L9) class represents generic graphical 3d objects. Then there are the subclasses:
 - Point
 - Line
 - Triangle
@@ -52,4 +52,4 @@ The [Object](objects.py) class represents generic graphical 3d objects. Then the
 
 ### utils.py
 
-Generic functions for manipulating and generating [Object](objects.py) instances and other useful functions
+Generic functions for manipulating and generating [Object](objects.py#L9) instances and other useful functions
