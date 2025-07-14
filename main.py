@@ -3,9 +3,12 @@ import matplotlib
 import objects
 from data import *
 
+###############################################################################
+# Some very technical configuration
 matplotlib.rcParams["savefig.directory"] = "./examples"
 objects.ax = plt.figure().add_subplot(projection='3d')
-
+###############################################################################
+# The definitions of the fcc, hcp, etc. methods
 
 def fcc(grid_range=range(0, 4), lower_bound=0, upper_bound=1.9, upper_clip_plane=math.inf):
     """
@@ -66,11 +69,12 @@ def print_point_set(s):
     """
     print(*map(lambda p: p.pos, s))
 
-
 ###############################################################################
-# Plot stuff here like this
+###############################################################################
+# Here you can plot stuff like this:
 # fcc().plot()
 
+###############################################################################
 ###############################################################################
 # Here is some configuration
 # Set initial elevation, azimuth and roll here
