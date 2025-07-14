@@ -1,4 +1,38 @@
-## Visualisations of FCC and HCP
+# Visualisations of FCC and HCP
+
+## Examples
+
+#### Wulff crystal with side-length 1 in FCC
+![Wulff crystal with side-length 1 in FCC](examples/FCC_Wulff1.png)
+This was plotted with
+```python
+fcc_wulff().plot()
+```
+
+#### FCC Lattice
+![FCC Lattice](examples/FCC.png)
+This was plotted with
+```python
+fcc(upper_bound=2.5, upper_clip_plane=5.5).plot()
+```
+
+#### Wulff crystal with side-length 1 in FCC and FCC Lattice
+![Wulff crystal with side-length 1 in FCC and FCC Lattice](examples/FCC_and_FCC_Wulff1.png)
+This was plotted with
+```python
+fcc(upper_bound=2.5, upper_clip_plane=5.5).plot()
+fcc_wulff(opacity=0.5).plot()
+```
+
+#### Wulff crystal with side-lengths 1 and 2 in FCC
+![Wulff crystal with side-lengths 1 and 2 in FCC](examples/FCC_Wulff1_Wulff2.png)
+This was plotted with
+```python
+fcc_wulff(opacity=0.7).plot()
+fcc_wulff2(opacity=0.7, color='blue', corner_color='darkblue').plot()
+```
+
+## The code
 
 ### main.py
 

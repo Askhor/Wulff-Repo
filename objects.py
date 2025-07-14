@@ -106,7 +106,7 @@ class Triangle(Object):
         x, y, z = np.transpose(np.array([self.a, self.b, self.c]))
         ax.plot_trisurf(
             x, y, [[0, 1, 2]], z,
-            color=self.color, edgecolor='none', antialiased=True, shade=True, alpha=self.alpha)
+            color=self.color, edgecolor=self.color, linewidth=0, antialiased=True, shade=True, alpha=self.alpha)
 
     def predicate(self, p) -> bool:
         return p(self.a) and p(self.b) and p(self.c)
@@ -116,6 +116,7 @@ class ObjectCollection(Object):
     """
     An arbitrary collection of Object instances
     """
+
     def __init__(self, objs):
         super().__init__()
         self.objs = objs
