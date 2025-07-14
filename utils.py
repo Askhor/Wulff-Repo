@@ -1,0 +1,104 @@
+import math
+
+from scipy.spatial import ConvexHull
+
+from objects import *
+
+eps = 0.001
+
+
+def ngon(n):
+    angles = np.arange(0, n) / n * 2 * np.pi
+
+    return ObjectCollection.from_points(
+        np.cos(angles),
+        np.sin(angles),
+        [0] * n
+    )
+
+
+def auto_lines(oc: ObjectCollection, length):
+    objs = oc.objs
+    edges = []
+
+    for i in range(len(objs)):
+        a = objs[i]
+        if not isinstance(a, Point):
+            continue
+        for j in range(i + 1, len(objs)):
+            b = objs[j]
+            if not isinstance(b, Point):
+                continue
+
+            p_a = a.pos
+            p_b = b.pos
+            v = np.subtract(p_a, p_b)
+
+            distance = math.sqrt(np.dot(v, v))
+
+            if abs(distance - length) < eps:
+                edges.append(Line(p_a, p_b))
+
+    return oc @ ObjectCollection(edges)
+
+
+def grid(x_values, y_values, z_values):
+    points = []
+
+    for x in x_values:
+        for y in y_values:
+            for z in z_values:
+                points.append(Point(np.array([x, y, z])))
+
+    return ObjectCollection(points)
+
+
+def points_inward(triangle, center):
+    a = triangle[1] - triangle[0]
+    b = triangle[2] - triangle[0]
+    orth = np.cross(a, b)
+
+    return np.dot(orth, center - triangle[0]) > 0
+
+
+def convex_hull(points: ObjectCollection):
+    point_coords = []
+
+    for o in points.objs:
+        if not isinstance(o, Point): continue
+        point_coords.append(o.pos)
+
+    center = sum(point_coords) / len(point_coords)
+
+    ch = ConvexHull(np.array(point_coords))
+    triangles = []
+
+    for a, b, c in ch.simplices:
+        tri = [point_coords[a],
+               point_coords[b],
+               point_coords[c]]
+
+        if points_inward(tri, center):
+            tri.reverse()
+
+        triangles.append(Triangle(*tri))
+
+    return points @ ObjectCollection(triangles)
+
+
+def constant(fun):
+    value = fun()
+    return lambda: value
+
+
+def setter(name, value):
+    def s(x):
+        x.__setattr__(name, value)
+    return s
+
+
+def color_setter(color):
+    def set_color(x):
+        x.color = color
+
+    return set_color
