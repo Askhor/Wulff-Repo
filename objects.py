@@ -48,6 +48,14 @@ class Point(Object):
     def predicate(self, p) -> bool:
         return p(self.pos)
 
+    def __eq__(self, other):
+        if not isinstance(other, self.__class__):
+            return False
+        return tuple(self.pos) == tuple(other.pos)
+
+    def __hash__(self):
+        return hash(tuple(self.pos))
+
 
 class Line(Object):
 
@@ -105,6 +113,9 @@ class Triangle(Object):
 
 
 class ObjectCollection(Object):
+    """
+    An arbitrary collection of Object instances
+    """
     def __init__(self, objs):
         super().__init__()
         self.objs = objs
@@ -156,3 +167,8 @@ class ObjectCollection(Object):
         for o in self.objs:
             if isinstance(o, _type):
                 fun(o)
+
+    def get_points(self):
+        points = set()
+        self.foreach(Point, lambda p: points.add(p))
+        return points

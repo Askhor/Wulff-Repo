@@ -51,9 +51,9 @@ def fcc_wulff_obj():
          [0, -1, 0],
          [0, 0, 1]])
 
-    return ((ObjectCollection.from_points(*fcc_wulff_data())
+    return (ObjectCollection.from_points(*fcc_wulff_data())
              * flipper
-             + pos(-1, -2, 0))
+             # + pos(-1, -2, 0))
             * ((1 / math.sqrt(2)) * np.identity(3)))
 
 

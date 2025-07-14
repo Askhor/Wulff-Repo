@@ -18,6 +18,9 @@ def ngon(n):
 
 
 def auto_lines(oc: ObjectCollection, length):
+    """
+    Generates a new Object with lines added between points of distance 'length'
+    """
     objs = oc.objs
     edges = []
 
@@ -43,6 +46,9 @@ def auto_lines(oc: ObjectCollection, length):
 
 
 def grid(x_values, y_values, z_values):
+    """
+    Given the three parameter sets X,Y,Z, generates X×Y×Z
+    """
     points = []
 
     for x in x_values:
@@ -54,6 +60,9 @@ def grid(x_values, y_values, z_values):
 
 
 def points_inward(triangle, center):
+    """
+    A utility method to define whether a triangle is pointing towards the center of some convex polygon
+    """
     a = triangle[1] - triangle[0]
     b = triangle[2] - triangle[0]
     orth = np.cross(a, b)
@@ -62,6 +71,9 @@ def points_inward(triangle, center):
 
 
 def convex_hull(points: ObjectCollection):
+    """
+    Given an ObjectCollection returns the polygon that is the convex hull
+    """
     point_coords = []
 
     for o in points.objs:
@@ -87,18 +99,17 @@ def convex_hull(points: ObjectCollection):
 
 
 def constant(fun):
+    """
+    A utility decorator, to make code faster, does not change behaviour
+    """
     value = fun()
     return lambda: value
 
 
 def setter(name, value):
+    """
+    Returns a function that takes an object and sets the 'name' field to 'value'
+    """
     def s(x):
         x.__setattr__(name, value)
     return s
-
-
-def color_setter(color):
-    def set_color(x):
-        x.color = color
-
-    return set_color
