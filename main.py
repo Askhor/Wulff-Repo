@@ -7,6 +7,8 @@ from data import *
 # Some very technical configuration
 matplotlib.rcParams["savefig.directory"] = "./examples"
 objects.ax = plt.figure().add_subplot(projection='3d')
+
+
 ###############################################################################
 # The definitions of the fcc, hcp, etc. methods
 
@@ -69,6 +71,7 @@ def print_point_set(s):
     """
     print(*map(lambda p: p.pos, s))
 
+
 ###############################################################################
 ###############################################################################
 # Here you can plot stuff like this:
@@ -104,4 +107,8 @@ objects.ax.set_aspect('equal')
 objects.ax.view_init(elev=elevation, azim=azimuth, roll=roll)
 plt.show()
 print(
-    f"Final azimuth and elevation:\nelevation = {objects.ax.elev:5.1f}\nazimuth = {objects.ax.azim:5.1f}\nroll = {objects.ax.roll:5.1f}")
+    f"""Final azimuth and elevation:
+elevation = {objects.ax.elev:5.1f}
+azimuth = {objects.ax.azim:5.1f}
+roll = {objects.ax.roll:5.1f}
+""")
