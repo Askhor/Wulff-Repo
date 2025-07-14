@@ -40,6 +40,7 @@ def fcc_wulff2():
     wulff = convex_hull(wulff)
     wulff.foreach(Triangle, setter('color', 'darkred'))
     wulff.foreach(Triangle, setter('alpha', 0.7))
+    return wulff
 
 
 def hcp():
@@ -63,15 +64,24 @@ def print_point_set(s):
     """
     print(*map(lambda p: p.pos, s))
 
+
 ##############################################################################
 # Plot stuff here like this
 # fcc().plot()
 
-
+fcc_wulff().plot()
+fcc_wulff2().plot()
 
 ##############################################################################
-
+# Here is some configuration
+# Set initial elevation and azimuth here
+elevation = 30
+azimuth = 60
 # plt.axis('off') # This line turns the axis off
+
+##############################################################################
 objects.ax.set_aspect('equal')
 
+objects.ax.view_init(elev=elevation, azim=azimuth)
 plt.show()
+print(f"Final azimuth and elevation: {objects.ax.azim:5.1f} and {objects.ax.elev:5.1f}")
