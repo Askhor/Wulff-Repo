@@ -1,5 +1,7 @@
 # Visualisations of FCC and HCP
 
+These visualisations are created with matplotlib which handles 3d rather simplisticly and hence there are sometimes issues with clipping.
+
 ## Examples
 
 #### Wulff crystal with side-length 1 in FCC
