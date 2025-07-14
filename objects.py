@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 
 import matplotlib.pyplot as plt
 import numpy as np
+import numpy.linalg as la
 
 ax = None
 
@@ -9,7 +10,8 @@ ax = None
 class Object(ABC):
     def __init__(self):
         self.color = "black"
-        self.alpha = 1
+        self.always_on_top = False
+        self.opacity = 1
         self.style = ''
 
     @abstractmethod
@@ -58,10 +60,10 @@ class Point(Object):
 
 
 class Line(Object):
-
     def __init__(self, a, b):
         super().__init__()
-        self.style = '--'
+        self.style = '-'
+        self.width = 1
         self.a = a
         self.b = b
 
@@ -76,7 +78,16 @@ class Line(Object):
             np.add(vector, self.b))
 
     def plot(self):
-        plt.plot(*np.transpose(np.array([self.a, self.b])), marker='', c=self.color, linestyle=self.style)
+        kwargs = {
+            'marker': '',
+            'c': self.color,
+            'linestyle': self.style,
+            'linewidth': self.width
+        }
+        if self.always_on_top:
+            kwargs['zorder'] = 1000
+
+        plt.plot(*np.transpose(np.array([self.a, self.b])), **kwargs)
 
     def predicate(self, p) -> bool:
         return p(self.a) and p(self.b)
@@ -103,13 +114,52 @@ class Triangle(Object):
             np.add(vector, self.c))
 
     def plot(self):
+        kwargs = {
+            'color': self.color,
+            'edgecolor': self.color,
+            'linewidth': 0,
+            'antialiased': True,
+            'shade': True,
+            'alpha': self.opacity
+        }
+        if self.always_on_top:
+            kwargs['zorder'] = 10000
+
         x, y, z = np.transpose(np.array([self.a, self.b, self.c]))
         ax.plot_trisurf(
             x, y, [[0, 1, 2]], z,
-            color=self.color, edgecolor=self.color, linewidth=0, antialiased=True, shade=True, alpha=self.alpha)
+            **kwargs)
 
     def predicate(self, p) -> bool:
         return p(self.a) and p(self.b) and p(self.c)
+
+
+class Sphere(Object):
+    def __init__(self, center, radius: float, detail: int = 100):
+        super().__init__()
+        self.center = center
+        self.radius = radius
+        self.detail = detail
+
+    def __mul__(self, matrix):
+        return self.__class__(np.dot(matrix, self.center), la.det(matrix) * self.radius, self.detail)
+
+    def __add__(self, vector):
+        return self.__class__(np.add(self.center, vector), self.radius, self.detail)
+
+    def plot(self):
+        u = np.linspace(0, 2 * np.pi, self.detail)
+        v = np.linspace(-1, 1, self.detail)
+        offset = np.repeat(self.center[0], self.detail, self.detail)
+        print(np.shape(np.outer(np.cos(u), np.sin(v))), np.shape(offset))
+        x = self.radius * np.outer(np.cos(u), np.sin(v)) + offset
+        y = self.radius * np.outer(np.sin(u), np.sin(v)) + offset
+        z = self.radius * np.outer(np.ones(self.detail), np.cos(v)) + offset
+        ax.plot_surface(x, y, z, alpha=self.opacity)
+        # Point(self.center).plot()
+
+    def predicate(self, p) -> bool:
+        return p(self.center)
 
 
 class ObjectCollection(Object):
@@ -168,6 +218,7 @@ class ObjectCollection(Object):
         for o in self.objs:
             if isinstance(o, _type):
                 fun(o)
+        return self
 
     def get_points(self):
         points = set()

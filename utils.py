@@ -98,6 +98,18 @@ def convex_hull(points: ObjectCollection):
     return points @ ObjectCollection(triangles)
 
 
+def vector_length(vector):
+    return np.dot(vector, vector)
+
+
+def circum_sphere(points: ObjectCollection, detail: int = 100):
+    coords = list(map(lambda p: p.pos, points.get_points()))
+    center = sum(coords) * (1 / len(coords))
+    radius = max(vector_length(v - center) for v in coords)
+
+    return points @ ObjectCollection([Sphere(center, radius, detail=detail)])
+
+
 def constant(fun):
     """
     A utility decorator, to make code faster, does not change behaviour
@@ -110,6 +122,8 @@ def setter(name, value):
     """
     Returns a function that takes an object and sets the 'name' field to 'value'
     """
+
     def s(x):
         x.__setattr__(name, value)
+
     return s

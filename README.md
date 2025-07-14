@@ -8,7 +8,9 @@ These visualisations are created with matplotlib which handles 3d rather simplis
 ![Wulff crystal with side-length 1 in FCC](examples/FCC_Wulff1.png)
 This was plotted with
 ```python
-fcc_wulff().plot()
+(auto_lines(fcc_wulff(opacity=0.2), 1)
+ .foreach(Line, setter('always_on_top', True))
+ .plot())
 ```
 
 #### FCC Lattice
