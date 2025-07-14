@@ -26,12 +26,12 @@ fcc(upper_bound=2.5, upper_clip_plane=5.5).plot()
 fcc_wulff(opacity=0.5).plot()
 ```
 
-#### Wulff crystal with side-lengths 1 and 2 in FCC
-![Wulff crystal with side-lengths 1 and 2 in FCC](examples/FCC_Wulff1_Wulff2.png)
+#### Wulff crystals with side-lengths 1 and 2 in FCC
+![Wulff crystals with side-lengths 1 and 2 in FCC](examples/FCC_Wulff1_Wulff2.png)
 This was plotted with
 ```python
-fcc_wulff(opacity=0.7).plot()
-fcc_wulff2(opacity=0.7, color='blue', corner_color='darkblue').plot()
+fcc_wulff(opacity=1, color='blue', corner_color='darkblue').plot()
+fcc_wulff2(opacity=0.5).plot()
 ```
 
 ## The code
