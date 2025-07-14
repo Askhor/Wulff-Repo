@@ -1,6 +1,6 @@
 # Visualisations of FCC and HCP
 
-These visualisations are created with matplotlib which handles 3d rather simplisticly and hence there are sometimes issues with clipping.
+These visualisations are created with matplotlib which handles 3d rather simplistically and hence there are sometimes issues with clipping.
 
 ## Examples
 
