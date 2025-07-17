@@ -1,6 +1,6 @@
 import math
 
-from scipy.spatial import ConvexHull
+from scipy.spatial import ConvexHull, Voronoi
 
 from objects import *
 
@@ -15,6 +15,16 @@ def ngon(n):
         np.sin(angles),
         [0] * n
     )
+
+
+def vector_length(vector):
+    return math.sqrt(np.dot(vector, vector))
+
+
+def distance_matches(a, b, length):
+    distance = vector_length(np.subtract(a, b))
+
+    return abs(distance - length) < eps
 
 
 def auto_lines(oc: ObjectCollection, length):
@@ -33,14 +43,8 @@ def auto_lines(oc: ObjectCollection, length):
             if not isinstance(b, Point):
                 continue
 
-            p_a = a.pos
-            p_b = b.pos
-            v = np.subtract(p_a, p_b)
-
-            distance = math.sqrt(np.dot(v, v))
-
-            if abs(distance - length) < eps:
-                edges.append(Line(p_a, p_b))
+            if distance_matches(a.pos, b.pos, length):
+                edges.append(Line(a.pos, b.pos))
 
     return oc @ ObjectCollection(edges)
 
@@ -102,8 +106,12 @@ def convex_hull(points: ObjectCollection):
     return points @ ObjectCollection(triangles)
 
 
-def vector_length(vector):
-    return math.sqrt(np.dot(vector, vector))
+def voronoi(points: ObjectCollection, position: np.ndarray, length):
+    neighbors = [p.pos for p in points.get_points() if distance_matches(position, p.pos, length)]
+
+    _voronoi = Voronoi([*neighbors, position])
+
+    return convex_hull(ObjectCollection([Point(v) for v in _voronoi.vertices]))
 
 
 def circum_sphere(points: ObjectCollection, detail: int = 100):

@@ -14,7 +14,7 @@ def square_repeat(array, axis):
 
 class Object(ABC):
     def __init__(self):
-        self.color = "black"
+        self.color = "grey"
         self.always_on_top = False
         self.opacity = 1
         self.style = ''
@@ -52,7 +52,15 @@ class Point(Object):
         return self.__class__(np.add(self.pos, vector))
 
     def plot(self):
-        plt.plot(*self.pos, marker=self.style, markersize=10, c=self.color, linestyle='')
+        kwargs = {
+            'marker': self.style,
+            'c': self.color,
+            'linestyle': '',
+            'markersize': 10
+        }
+        if self.always_on_top:
+            kwargs['zorder'] = 1000
+        plt.plot(*self.pos, **kwargs)
 
     def predicate(self, p) -> bool:
         return p(self.pos)

@@ -53,17 +53,16 @@ def fcc_wulff2(opacity=1, corner_color='red', color='darkred'):
     return wulff
 
 
-def hcp():
+def hcp(grid_range=range(0, 4), lower_bound=0, upper_bound=1.9, upper_clip_plane=math.inf):
     """
     Generates a subset of hcp
     """
-    value_range = range(-2, 3)
-    g = grid(value_range, value_range, value_range)
+
+    g = grid(grid_range, grid_range, grid_range)
     g *= hcp_transform()
     g @= g + hcp_vector()
-    lower = -1.5
-    upper = 1.5
-    g = g.filter(lambda p: all(lower <= t <= upper for t in p))
+    g = g.filter(lambda p: all(lower_bound <= t <= upper_bound for t in p))
+    g = g.filter(lambda p: sum(p[i] for i in range(3)) <= upper_clip_plane)
     g = auto_lines(g, 1)
     return g
 
