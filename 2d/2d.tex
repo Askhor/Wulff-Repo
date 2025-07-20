@@ -5,8 +5,10 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{tikz}
+\usepackage{xcolor}
 \usepackage{amsfonts}
 \usepackage{microtype}
+\usepackage[papersize=(14cm,0cm),textwidth=14cm,left=0cm,right=0cm,top=0cm,bottom=0cm,headhight=0cm,headsep=0cm]{geometry}
 \usepackage[english]{babel}
 \usepackage{amsthm}
 \usepackage{mathtools}
@@ -31,8 +33,7 @@
 \usetikzlibrary{shapes.geometric}
 
 \begin{document}
-	\maketitle
-
+	\pagecolor{white}
 	\newcommand{\radius}{0.05 cm}
 	\newcommand{\trirad}{0.5cm}
 	\newcommand{\triwidt}{0.1cm}
@@ -49,7 +50,7 @@
 
 		\foreach \x in {1,...,#1} {
 			\foreach \y in {1,...,#1} {
-				\pgfmathparse{\x>#1-\y ? "black" : "gray"}
+				\pgfmathparse{\x>#1-\y ? "black" : "lightgray"}
 				\edef\colour{\pgfmathresult}
 				\fill[color=\colour] (\x,\y) circle (\radius);
 				\fi
@@ -57,9 +58,6 @@
 		}
 		\end{tikzpicture}
 	}
-
-	This is the stuff:
-
 	\begin{figure}[h]
 		\centering
 		\begin{subfigure}{\figwidt}
@@ -82,6 +80,5 @@
 			\myfigure{5}
 			\caption{$n=5$}
 		\end{subfigure}
-		\caption{The stuff}
 	\end{figure}
 \end{document}
