@@ -98,3 +98,7 @@ The [Object](objects.py#L9) class represents generic graphical 3d objects. Then 
 ### utils.py
 
 Generic functions for manipulating and generating [Object](objects.py#L9) instances and other useful functions
+
+### The 2d graphic
+
+![The 2d graphic](2d/2d.svg)
