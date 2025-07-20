@@ -5,6 +5,5 @@ test
 *.out
 *.errors
 *.log
-*.pdf
 *.aux
 *.gz
