@@ -1,0 +1,83 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{unicode-helper}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usepackage{amsfonts}
+\usepackage{microtype}
+\usepackage[english]{babel}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{subcaption}
+\usepackage{braket}
+\usepackage[pdftex]{hyperref}
+\usepackage{cleveref}
+
+\newcommand{\titlevar}{Graphic}
+\newcommand{\authorvar}{Julia Meßthaler}
+%\newcommand{\datevar}{}
+\title{\titlevar}
+\author{\authorvar}
+\date{\datevar}
+\hypersetup{
+	pdftitle=\titlevar,
+	pdfauthor=\authorvar,
+	pdfcreationdate=\datevar,
+}
+\setlength{\parindent}{0pt}
+
+\usetikzlibrary{shapes.geometric}
+
+\begin{document}
+	\maketitle
+
+	\newcommand{\radius}{0.05 cm}
+	\newcommand{\trirad}{0.5cm}
+	\newcommand{\triwidt}{0.1cm}
+	\newcommand{\figwidt}{0.4\textwidth}
+
+	\newcommand{\myfigure}[1]{
+		\begin{tikzpicture}
+		\fill[color=white] (0, 0) rectangle (#1 + 1,#1 + 1);
+
+		\draw[line width=\trirad, line join=round] (#1,#1) -- (#1,1) -- (1,#1) -- cycle;
+		\draw[color=white, line width=\trirad - \triwidt, line join=round] (#1,#1) -- (#1,1) -- (1,#1) -- cycle;
+		\fill[color=white] (#1,#1) -- (#1,1) -- (1,#1) -- cycle;
+
+		\foreach \x in {1,...,#1} {
+			\foreach \y in {1,...,#1} {
+				\fill[] (\x,\y) circle (\radius);
+			}
+		}
+		\end{tikzpicture}
+	}
+
+	This is the stuff:
+
+	\begin{figure}[h]
+		\centering
+		\begin{subfigure}{\figwidt}
+			\centering
+			\myfigure{2}
+			\caption{$n=2$}
+		\end{subfigure}
+		\begin{subfigure}{\figwidt}
+			\centering
+			\myfigure{3}
+			\caption{$n=3$}
+		\end{subfigure}
+		\begin{subfigure}{\figwidt}
+			\centering
+			\myfigure{4}
+			\caption{$n=4$}
+		\end{subfigure}
+		\begin{subfigure}{\figwidt}
+			\centering
+			\myfigure{5}
+			\caption{$n=5$}
+		\end{subfigure}
+		\caption{The stuff}
+	\end{figure}
+\end{document}
