@@ -1,0 +1,11 @@
+(fcc(range(-4, 5), lower_bound=-2, upper_bound=2, add_lines=False)
+ .foreach(Point, setter('size', 2.5))
+ .plot())
+
+lattice = fcc(range(-1, 2), -1.5, 1.5)
+result = voronoi(lattice, pos(0, 0, 0), 1)
+result = auto_lines(result, math.sqrt(6) / 4)
+result.foreach(Triangle, setter('opacity', 0.2))
+result.foreach(Triangle, setter('color', 'green'))
+result.foreach(Point, setter('color', 'green'))
+result.plot()

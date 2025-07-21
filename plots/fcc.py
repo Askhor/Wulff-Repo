@@ -1,0 +1,1 @@
+fcc(upper_bound=2.5, upper_clip_plane=5.5).plot()

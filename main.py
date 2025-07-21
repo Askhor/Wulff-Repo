@@ -1,5 +1,4 @@
 import matplotlib
-import os
 
 import objects
 from data import *
@@ -83,6 +82,15 @@ def print_point_set(s):
 # Here you can plot stuff like this:
 # fcc().plot()
 
+from pathlib import Path
+
+file = Path("plots") / "wulff_fcc.py"
+exec(file.read_text())
+
+# wulff = auto_lines(hcp(), 1)
+# wulff = ObjectCollection([ o for o in wulff.objs if isinstance(o, Line)])
+# wulff.plot()
+
 ################################################################################
 ################################################################################
 # Here is some configuration
@@ -98,7 +106,7 @@ roll = 0
 # elevation = -28.4
 # azimuth =   9.1
 # roll = -27.6
-# plt.axis('off')  # This line turns the axis off
+plt.axis('off')  # This line turns the axis off
 
 ################################################################################
 # plot origin
