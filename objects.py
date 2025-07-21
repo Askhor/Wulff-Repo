@@ -43,6 +43,7 @@ class Point(Object):
         if not isinstance(pos, np.ndarray):
             raise ValueError(f"The position of points must be a nd array and not {type(pos)}")
         self.style = 'o'
+        self.size = 10
         self.pos = pos
 
     def __mul__(self, matrix):
@@ -56,7 +57,7 @@ class Point(Object):
             'marker': self.style,
             'c': self.color,
             'linestyle': '',
-            'markersize': 10
+            'markersize': self.size
         }
         if self.always_on_top:
             kwargs['zorder'] = 1000

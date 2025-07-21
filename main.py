@@ -1,4 +1,5 @@
 import matplotlib
+import os
 
 import objects
 from data import *
@@ -7,6 +8,7 @@ from data import *
 # Some very technical configuration
 matplotlib.rcParams["savefig.directory"] = "./examples"
 objects.ax = plt.figure().add_subplot(projection='3d')
+# objects.ax.set_proj_type('ortho') # Enables orthogonal projection
 objects.ax.set_xlabel('X')
 objects.ax.set_ylabel('Y')
 objects.ax.set_zlabel('Z')
@@ -15,7 +17,7 @@ objects.ax.set_zlabel('Z')
 ################################################################################
 # The definitions of the fcc, hcp, etc. methods
 
-def fcc(grid_range=range(0, 4), lower_bound=0, upper_bound=1.9, upper_clip_plane=math.inf):
+def fcc(grid_range=range(0, 4), lower_bound=0, upper_bound=1.9, upper_clip_plane=math.inf, add_lines=True):
     """
     Generates a subset of fcc
     :grid_range: The range for the grid which will be range(-3,4) × range(-3,4) × range(-3, 4)
@@ -24,7 +26,8 @@ def fcc(grid_range=range(0, 4), lower_bound=0, upper_bound=1.9, upper_clip_plane
     g *= fcc_transform()
     g = g.filter(lambda p: all(lower_bound <= t <= upper_bound for t in p))
     g = g.filter(lambda p: sum(p[i] for i in range(3)) <= upper_clip_plane)
-    g = auto_lines(g, 1)
+    if add_lines:
+        g = auto_lines(g, 1)
     return g
 
 
@@ -53,7 +56,7 @@ def fcc_wulff2(opacity=1, corner_color='red', color='darkred'):
     return wulff
 
 
-def hcp(grid_range=range(0, 4), lower_bound=0, upper_bound=1.9, upper_clip_plane=math.inf):
+def hcp(grid_range=range(0, 4), lower_bound=0, upper_bound=1.9, upper_clip_plane=math.inf, add_lines=True):
     """
     Generates a subset of hcp
     """
@@ -63,7 +66,8 @@ def hcp(grid_range=range(0, 4), lower_bound=0, upper_bound=1.9, upper_clip_plane
     g @= g + hcp_vector()
     g = g.filter(lambda p: all(lower_bound <= t <= upper_bound for t in p))
     g = g.filter(lambda p: sum(p[i] for i in range(3)) <= upper_clip_plane)
-    g = auto_lines(g, 1)
+    if add_lines:
+        g = auto_lines(g, 1)
     return g
 
 
