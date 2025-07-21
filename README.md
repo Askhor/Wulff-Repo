@@ -55,10 +55,11 @@ c.plot()
 
 ```python
 lettuce = fcc(range(-1, 2), -1.5, 1.5)
-
 result = voronoi(lettuce, pos(0, 0, 0), 1)
-result.foreach(Triangle, setter('opacity', 0.6))
-result @= lettuce
+result = auto_lines(result, math.sqrt(6) / 4)
+result.foreach(Triangle, setter('opacity', 0.2))
+result.foreach(Triangle, setter('color', 'green'))
+result.foreach(Point, setter('color', 'green'))
 result.plot()
 ```
 
@@ -68,10 +69,13 @@ result.plot()
 
 ```python
 lettuce = hcp(range(-1, 2), -1.5, 1.5)
-
 result = voronoi(lettuce, pos(0, 0, 0), 1)
-result.foreach(Triangle, setter('opacity', 1))
-result @= lettuce
+result = auto_lines(result, math.sqrt(6) / 4)
+result = auto_lines(result, math.sqrt(6) / 3)
+result = auto_lines(result, math.sqrt(1/6))
+result.foreach(Triangle, setter('opacity', 0.2))
+result.foreach(Triangle, setter('color', 'green'))
+result.foreach(Point, setter('color', 'green'))
 result.plot()
 ```
 
